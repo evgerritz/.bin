@@ -1,0 +1,17 @@
+#!/bin/bash
+intern=eDP1
+
+lidstate=/proc/acpi/button/lid/LID/state
+
+while true; do
+    extern=$(xrandr | grep "^DP. connected" | cut -d' ' -f 1)
+    if [ $(xrandr | grep " connected" | wc -l) -eq 1 ]; then
+        xrandr --output DP1 --off --output DP2 --off --output "$intern" --primary --auto
+    elif grep 'open' $lidstate; then
+        xrandr --output "$extern" --primary --mode 2560x1440 --pos 1920x0 --rotate normal --output "$intern" --mode 1920x1080 --pos 0x0 --rotate normal
+    else
+        xrandr --output "$extern" --auto --output "$intern" --off
+    fi
+    sleep 5
+done
+
