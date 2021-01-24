@@ -1,5 +1,0 @@
-#!/usr/bin/bash
-while True; do
-    nitrogen --restore
-    wait 10
-done
